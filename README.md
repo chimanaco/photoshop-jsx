@@ -3,11 +3,11 @@ Photoshop-jsx
 
 Scripts for Photoshop
 
-Templates
+Resize.jsx
 -----
 
-* Reize.jsx<br>
-  - Resize documents & save them to a destination folder<br>
-  - How to use:<br>
-  input document size in a dialog(set longer side)<br>
-  choose source folderfadeBG.pde - fade background
+* About<br>
+  - Resize .jpg documents & save them to a destination folder.<br>
+* How to use<br>
+  - Input document size in a dialog(input longer side).<br>
+  - Choose source folder.
