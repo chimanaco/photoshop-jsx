@@ -9,8 +9,8 @@ http://d.hatena.ne.jp/itouhiro/20090615
 - rename / numbering
 var num = 1;		// start from
 var digit = 4; 	// file name digit
-
 - multi extension (now only for .jpg)
+- error handling
 
 */
 
@@ -24,10 +24,10 @@ var defSize = 1280;
 	destination folder
 ------------------------------*/
 
-//	Mac --> Macintosh HD/psjsx\target
-//	Win --> C:\psjsx\target
+//	Mac --> Macintosh HD/psjsx\dest
+//	Win --> C:\psjsx\dest
 
-var	dest = "/psjsx/target";	
+var	dest = "/psjsx/dest";	
 
 
 /*------------------------------
@@ -45,34 +45,28 @@ main();
 function main() {
 	// set value in dialog
 	setValue();
-	
 	// set units
 	preferences.rulerUnits = Units.PIXELS;
-
 	// set target folder
 	setFolder();
-
+	
 	// set source folder
 	var folderObj = Folder.selectDialog("choose a souce folder");
-
 	// get .jpg files
 	var files = folderObj.getFiles("*.jpg");
-	
-	// action
+	// get array length
 	var len = files.length;
+	
+	// save files
 	for(var i = 0; i < len; i++){
 	    // open a file
 	    var theDoc = app.open(files[i]);
-	    
 	    // mode: RGB
 	    theDoc.changeMode(ChangeMode.RGB);
-
 	    // resize width & height
 		resize(theDoc);
-
 		// save as jpg
 		savejpg(theDoc);
-
 		// close
 		theDoc.close(SaveOptions.DONOTSAVECHANGES);
 	}
@@ -155,25 +149,13 @@ function setValue() {
 		alert("input an integral number");
 		ok_flag = false;
 		uDlg.close();
-
-		// END
-		// return;
 	}
 
-	if(!ok_flag) {
-		alert("ERRRO");
-		return;
-	}
+	// if(!ok_flag) {
+	// 	alert("ERRRO");
+	// 	return;
+	// }
 
-}
-
-/*------------------------------
-	set source
-------------------------------*/
-
-function setSource() {
-	folderObj = Folder.selectDialog("choose a souce folder");
-	files = folderObj.getFiles("*.jpg");
 }
 
 /*------------------------------
@@ -224,8 +206,6 @@ function resize(doc) {
 
 function savejpg(doc) {
 	var dName = doc.name;
-
-	// var saveFile = File(fPath + targetPath + dName);
 	var saveFile = File(dest + "/" + dName);
 	// var saveFile = File(foldername + "/" + num + ".jpg");
 	var jpegOpt = new JPEGSaveOptions();
